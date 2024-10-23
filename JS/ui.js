@@ -73,7 +73,7 @@ function createModal(modalMovieData) {
     modalContainer.appendChild(movieModal);
     modalContainer.style.display = "block"; // 모달 보이기
   } else {
-    console.error("modal-content 요소를 찾을 수 없습니다.");
+    console.log("modal-content 요소를 찾을 수 없습니다.");
   }
 
   // 모달 창 스타일링 및 표시
@@ -113,15 +113,13 @@ function createModal(modalMovieData) {
         .length === 0
     ) {
       bookmarksData.push(modalMovieData); // 현재 모달의 영화 정보를 추가
-      console.log(modalMovieData);
+      // console.log(modalMovieData);
       localStorage.setItem("bookmarks", JSON.stringify(bookmarksData));
     } // 저장
   });
 
   // 북마크 삭제 버튼을 눌렀을 때
   removeBookmark.addEventListener("click", () => {
-    // removeBookmark.style.display = "none"; // 삭제 버튼 숨기기
-    // addBookmark.style.display = "flex"; // 추가 버튼 보이기
     alert("영화가 북마크에서 제거되었습니다.");
 
     // 로컬 스토리지에서 해당 영화 삭제

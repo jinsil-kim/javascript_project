@@ -163,3 +163,11 @@ transform: scale(1.1);
   font-weight: 700;
   font-size: 18px;
 }
+
+.error{
+  color: red;
+  display: flex;
+  justify-content: center;
+  font-size: large;
+  font-weight: 800;
+}
