@@ -1,4 +1,4 @@
-import {fetchMovies} from "./api.js"
+import { fetchMovies } from "./api.js";
 
 let movies = [];
 
@@ -51,6 +51,7 @@ movieInput.addEventListener("input", () => {
 
 // 모달 창 생성하는 함수
 function createModal(modalMovieData) {
+  console.log(modalMovieData);
   // 모달 창 생성
   const movieModal = document.createElement("div");
   movieModal.className = "movie-modal";
@@ -107,7 +108,7 @@ function createModal(modalMovieData) {
 
     // 영화 정보를 로컬 스토리지에 저장
     let bookmarksData = JSON.parse(localStorage.getItem("bookmarks")) || [];
-    
+
     if (
       bookmarksData.filter((bookmark) => bookmark.id === modalMovieData.id)
         .length === 0
@@ -116,6 +117,8 @@ function createModal(modalMovieData) {
       // console.log(modalMovieData);
       localStorage.setItem("bookmarks", JSON.stringify(bookmarksData));
     } // 저장
+
+    modalContainer.style.display = "none"; // 추가 후 모달창 숨기기
   });
 
   // 북마크 삭제 버튼을 눌렀을 때
@@ -129,12 +132,32 @@ function createModal(modalMovieData) {
       (bookmark) => bookmark.id !== modalMovieData.id
     );
     localStorage.setItem("bookmarks", JSON.stringify(deletedBookmarks));
-    
+
     modalContainer.style.display = "none"; // 삭제 후 모달창 숨기기
 
-    displayMovies(deletedBookmarks) // 삭제 후 남은 카드만 보이기
-
+    displayMovies(deletedBookmarks); // 삭제 후 남은 카드만 보이기
   });
+
+
+  //모달창 안에서 북마크버튼이 modalMovieData안에 id값을 포함하는지 여부에 따라 삭제, 추가 버튼이 뜨도록 하기
+  let bookmarksData = JSON.parse(localStorage.getItem("bookmarks")) || [];
+  console.log(bookmarksData);
+  console.log(modalMovieData);
+
+  let isIncluded = false;
+  bookmarksData.forEach((movie) => {
+    if (movie.id === modalMovieData.id) {
+      isIncluded = true;
+    }
+  });
+
+  if (isIncluded) {
+    addBookmark.style.display = "none"; // 추가 버튼 숨기기
+    removeBookmark.style.display = "flex"; // 삭제 버튼 보이기
+  } else {
+    addBookmark.style.display = "flex"; // 추가 버튼 보이기
+    removeBookmark.style.display = "none"; // 삭제 버튼 숨기기
+  }
 }
 
 // 북마크보기 버튼 이벤트리스너
@@ -163,9 +186,8 @@ bookmarkBtn.addEventListener("click", () => {
       // 클릭 이벤트 추가
       bookmarkCard.addEventListener("click", () => {
         createModal(movie); // 클릭된 영화 정보를 모달에 표시
-        addBookmark.style.display = "none"; // 추가 버튼 숨기기
-        removeBookmark.style.display = "flex"; // 삭제 버튼 보이기
-    
+        // addBookmark.style.display = "none"; // 추가 버튼 숨기기
+        // removeBookmark.style.display = "flex"; // 삭제 버튼 보이기
       });
 
       // 북마크된 영화 카드를 컨테이너에 추가
