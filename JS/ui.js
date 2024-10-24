@@ -144,6 +144,7 @@ function createModal(modalMovieData) {
   console.log(bookmarksData);
   console.log(modalMovieData);
 
+  // 로컬스토리지에 영화 정보가 객체 형태로 들어가 있기때문에 foreach로 확인
   let isIncluded = false;
   bookmarksData.forEach((movie) => {
     if (movie.id === modalMovieData.id) {
@@ -187,7 +188,7 @@ bookmarkBtn.addEventListener("click", () => {
       bookmarkCard.addEventListener("click", () => {
         createModal(movie); // 클릭된 영화 정보를 모달에 표시
         // addBookmark.style.display = "none"; // 추가 버튼 숨기기
-        // removeBookmark.style.display = "flex"; // 삭제 버튼 보이기
+        // removeBookmark.style.display = "flex"; // 삭제 버튼 보이기 => id값 포함 여부에 따라 버튼이 바뀌게 했으므로 더이상 필요없음
       });
 
       // 북마크된 영화 카드를 컨테이너에 추가
